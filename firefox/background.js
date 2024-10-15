@@ -25,3 +25,4 @@ browser.storage.onChanged.addListener((changes, area) => {
     whitelist = changes.whitelist.newValue;
   }
 });
+

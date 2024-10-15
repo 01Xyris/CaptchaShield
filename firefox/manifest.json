@@ -1,16 +1,14 @@
 {
   "manifest_version": 2,
   "name": "CaptchaShield: Anti-Deception Guard",
-  "version": "1.2",
+  "version": "1.4",
   "description": "Protects against fake CAPTCHAs, malicious behaviors, and prevents clipboard hijacking on websites.",
   "permissions": [
     "storage",
     "activeTab",
-    "webRequest",
-    "webRequestBlocking",
-    "<all_urls>",
     "webNavigation",
-    "tabs"
+    "tabs",
+    "<all_urls>"
   ],
   "content_scripts": [
     {
@@ -37,9 +35,9 @@
     "128": "icon128.png"
   },
   "background": {
-    "scripts": ["background.js"],
-    "persistent": false
+    "scripts": ["background.js"]
   },
+  "web_accessible_resources": ["clipboard-override.js"],
   "browser_specific_settings": {
     "gecko": {
       "id": "01xyris@proton.me",
