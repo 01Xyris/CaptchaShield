@@ -5,7 +5,7 @@
 ## Features
 - Real-time detection of fake CAPTCHA forms.
 - Blocks deceptive scripts and phishing attempts.
-- 
+
 
 
 ## Installation
@@ -30,6 +30,7 @@ Alternatively, you can install the extension in **Developer Mode** for both **Fi
 6. The extension will be loaded and available in your Chrome browser.
 
 
+#
 
 ![CaptchaShield Logo](https://addons.mozilla.org/user-media/previews/thumbs/306/306848.jpg)
 ![CaptchaShield Action](https://addons.mozilla.org/user-media/previews/thumbs/306/306849.jpg)
