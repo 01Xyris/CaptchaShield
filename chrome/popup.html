@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CaptchaShield: Anti-Deception Guard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #3f51b5;
+      --primary-light: #757de8;
+      --primary-dark: #002984;
+      --secondary-color: #ff4081;
+      --background-color: #e8eaf6;
+      --surface-color: #c5cae9;
+      --on-surface-color: #3c3c3c;
+      --on-primary-color: #ffffff;
+    }
+    body {
+      font-family: 'Roboto', sans-serif;
+      width: 350px;
+      margin: 0;
+      padding: 16px;
+      background-color: var(--background-color);
+      color: var(--on-surface-color);
+    }
+    .header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 16px;
+      text-align: center;
+    }
+    .logo {
+      width: 64px;
+      height: 64px;
+      margin-bottom: 8px;
+    }
+    h1 {
+      font-size: 24px;
+      font-weight: 500;
+      margin: 0;
+      color: var(--primary-color);
+    }
+    .card {
+      background-color: var(--surface-color);
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+    h2 {
+      font-size: 18px;
+      font-weight: 500;
+      margin: 0 0 16px 0;
+      display: flex;
+      align-items: center;
+      color: var(--primary-dark);
+    }
+    h2 .material-icons {
+      margin-right: 8px;
+      color: var(--primary-color);
+    }
+    .toggle {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+    .toggle label {
+      font-size: 14px;
+    }
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 48px;
+      height: 24px;
+    }
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: .4s;
+      border-radius: 24px;
+    }
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 20px;
+      width: 20px;
+      left: 2px;
+      bottom: 2px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+    }
+    input:checked + .slider {
+      background-color: var(--secondary-color);
+    }
+    input:checked + .slider:before {
+      transform: translateX(24px);
+    }
+    .stats p, .about p {
+      font-size: 14px;
+      margin: 8px 0;
+    }
+    button {
+      background-color: var(--primary-color);
+      color: var(--on-primary-color);
+      padding: 8px 12px;
+      font-size: 14px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+      width: 100%;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: var(--primary-light);
+    }
+    button .material-icons {
+      font-size: 18px;
+    }
+    #whitelistStatus {
+      margin-top: 8px;
+      font-size: 12px;
+      color: var(--on-surface-color);
+    }
+    .tabs {
+      display: flex;
+      margin-bottom: 16px;
+    }
+    .tab {
+      flex: 1;
+      text-align: center;
+      padding: 8px;
+      background-color: var(--surface-color);
+      color: var(--on-surface-color);
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+      transition: all 0.3s ease;
+      font-size: 14px;
+    }
+    .tab.active {
+      border-bottom-color: var(--primary-color);
+      color: var(--primary-color);
+    }
+    .tab-content {
+      display: none;
+    }
+    .tab-content.active {
+      display: block;
+    }
+    .about a {
+      color: var(--primary-color);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      margin-right: 10px;
+    }
+    .about a:hover {
+      text-decoration: underline;
+    }
+    .about .material-icons {
+      font-size: 16px;
+      margin-right: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <img src="icon128.png" alt="CaptchaShield Logo" class="logo">
+    <h1>CaptchaShield</h1>
+  </div>
+
+  <div class="tabs">
+    <div class="tab active" data-tab="main">Main</div>
+    <div class="tab" data-tab="about">About</div>
+  </div>
+
+  <div id="mainContent" class="tab-content active">
+    <div class="card">
+      <div class="toggle">
+        <label for="preventClipboardHijacking">Prevent Clipboard Hijacking</label>
+        <label class="switch">
+          <input type="checkbox" id="preventClipboardHijacking" checked>
+          <span class="slider"></span>
+        </label>
+      </div>
+    </div>
+    <div class="card stats">
+      <h2><span class="material-icons">bar_chart</span> Statistics</h2>
+      <p>Clipboard Attempts Blocked: <span id="clipboardBlocked">0</span></p>
+    </div>
+    <div class="card whitelist">
+      <h2><span class="material-icons">verified_user</span> Whitelist</h2>
+      <button id="addToWhitelist">
+        <span class="material-icons">add_circle</span> Add Current Site
+      </button>
+      <button id="removeFromWhitelist">
+        <span class="material-icons">remove_circle</span> Remove Current Site
+      </button>
+      <p id="whitelistStatus"></p>
+    </div>
+  </div>
+
+  <div id="aboutContent" class="tab-content">
+    <div class="card about">
+      <h2><span class="material-icons">info</span> About CaptchaShield</h2>
+      <p>CaptchaShield protects against deceptive CAPTCHA tests that trick users into executing malicious PowerShell scripts.</p>
+      <p>Connect with me:</p>
+      <a href="https://github.com/01Xyris" target="_blank">
+        <span class="material-icons">code</span> GitHub
+      </a>
+      <a href="https://x.com/01Xyris" target="_blank">
+        <span class="material-icons">chat</span> Twitter
+      </a>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+
+</body>
+</html>
